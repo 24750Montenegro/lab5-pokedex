@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -31,7 +32,6 @@ import com.uvg.lab5_pokeapi.navigation.Screen
 import com.uvg.lab5_pokeapi.network.Pokemon
 import com.uvg.lab5_pokeapi.ui.screens.HomeScreen
 import com.uvg.lab5_pokeapi.ui.screens.PokemonDetailScreen
-import com.uvg.lab5_pokeapi.ui.screens.PokemonViewModel
 import com.uvg.lab5_pokeapi.ui.theme.PokedexYellow
 import com.uvg.lab5_pokeapi.ui.theme.PokedexRed
 import com.uvg.lab5_pokeapi.ui.theme.PokedexDarkRed
@@ -57,7 +57,10 @@ fun PokeApp(navController: NavHostController = rememberNavController()) {
             modifier = Modifier.fillMaxSize(),
             color = PokedexDarkRed
         ) {
-            val pokemonViewModel: PokemonViewModel = viewModel()
+            // ViewModel con StateFlow
+            val mainViewModel: MainViewModel = viewModel()
+            // Observar cambios de estado
+            val uiState by mainViewModel.uiState.collectAsState()
             
             NavHost(
                 navController = navController,
@@ -65,7 +68,7 @@ fun PokeApp(navController: NavHostController = rememberNavController()) {
             ) {
                 composable(Screen.Home.route) {
                     HomeScreen(
-                        pokeUiState = pokemonViewModel.pokeUiState,
+                        pokeUiState = uiState,
                         onPokemonClick = { pokemon ->
                             navController.navigate(
                                 Screen.PokemonDetail.createRoute(pokemon.id, pokemon.name)
