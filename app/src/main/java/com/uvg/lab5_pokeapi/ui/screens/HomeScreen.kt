@@ -24,24 +24,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
 import com.uvg.lab5_pokeapi.R
 import com.uvg.lab5_pokeapi.network.Pokemon
+import com.uvg.lab5_pokeapi.ui.PokeUiState
 import com.uvg.lab5_pokeapi.ui.theme.Lab5pokeapiTheme
 import com.uvg.lab5_pokeapi.ui.theme.PokedexBlue
-import com.uvg.lab5_pokeapi.ui.theme.PokedexYellow
 
-// pantalla principal con listado de pokemones
+// Pantalla principal con listado de pokemones
 @Composable
 fun HomeScreen(
+    // Estado de la UI desde StateFlow
     pokeUiState: PokeUiState,
     onPokemonClick: (Pokemon) -> Unit = {},
     modifier: Modifier = Modifier,
